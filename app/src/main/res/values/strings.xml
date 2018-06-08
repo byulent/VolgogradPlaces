@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Volgograd Places</string>
+    <string name="str_gallery">Gallery</string>
+    <string name="str_login">Login</string>
+    <string name="title_activity_auth">AuthActivity</string>
+    <string name="email_hint" translatable="false">ivanov@mail.ru</string>
+    <string name="str_password">Password</string>
+    <string name="str_signup">Sign up</string>
+    <string name="str_email">E-mail</string>
+    <string name="str_auth">Authorize</string>
+    <string name="str_authorization">Authorization</string>
+    <string name="password_hint">Your password</string>
+    <string name="str_register">Register</string>
+    <string name="str_reg">Registration</string>
+    <string name="str_name">Name</string>
+    <string name="name_hint">Your name</string>
+    <string name="bdate_hint">Your birthdate</string>
+    <string name="str_bdate">Birthdate</string>
+    <string name="str_city">City</string>
+    <string name="city_hint">Your city</string>
+    <string name="str_sex">Sex</string>
+    <string name="str_performs_auth">Performs authorization…</string>
+    <string name="required_field">Field is required</string>
+    <string name="min_length">Minimum length is 6 characters</string>
+    <string name="invalid_email">Email is invalid</string>
+    <string-array name="sex_values">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+</resources>

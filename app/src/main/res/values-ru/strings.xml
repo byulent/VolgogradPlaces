@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="str_password">Пароль</string>
+    <string name="app_name">Достопримечательности Волгоградской области</string>
+    <string name="str_gallery">Галерея</string>
+    <string name="str_login">Логин</string>
+    <string name="str_signup">Войти</string>
+    <string name="str_auth">Authorize</string>
+    <string name="str_authorization">Authorization</string>
+    <string name="str_register">Register</string>
+    <string name="str_reg">Registration</string>
+    <string name="str_name">Name</string>
+    <string name="name_hint">Your name</string>
+    <string name="bdate_hint">Your birthdate</string>
+    <string name="str_bdate">Birthdate</string>
+    <string name="str_city">City</string>
+    <string name="city_hint">Your city</string>
+    <string name="str_male">Male</string>
+    <string name="str_female">female</string>
+    <string name="str_sex">Sex</string>
+    <string name="str_performs_auth">Performs authorization...</string>
+    <string name="required_field">Field is required</string>
+    <string name="min_length">Minimum length is 6 characters</string>
+    <string name="invalid_email">Email is invalid</string>
+</resources>
