@@ -46,7 +46,7 @@ public class GalleryLoader extends AsyncTask<Void, Void, List<Bitmap>> {
             MongoCollection<Document> photos = db.getCollection("photos");
             FindIterable<Document> cursor = photos.find();
             for (Document aCursor : cursor) {
-                String folder = Common.HOST_NAME + aCursor.get("filePhoto", String.class).substring(1);
+                String folder = "http://" + Common.HOST_NAME + aCursor.get("filePhoto", String.class).substring(1);
                 Log.d("obj", folder);
                 InputStream stream = new URL(folder).openStream();
                 images.add(BitmapFactory.decodeStream(stream));
