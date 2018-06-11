@@ -14,12 +14,11 @@ import org.bson.Document;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 import ru.byulent.volgogradplaces.entities.LocalDB;
 import ru.byulent.volgogradplaces.util.Common;
 
-public class GalleryLoader extends AsyncTask<Void, Void, List<Bitmap>> {
+public class GalleryLoader extends AsyncTask<Void, Void, ArrayList<Bitmap>> {
     private final Listener mListener;
 
     public GalleryLoader(Listener listener) {
@@ -27,13 +26,13 @@ public class GalleryLoader extends AsyncTask<Void, Void, List<Bitmap>> {
     }
 
     public interface Listener{
-        void onImageLoaded(List<Bitmap> bitmaps);
+        void onImageLoaded(ArrayList<Bitmap> bitmaps);
         void onError();
     }
 
     @Override
-    protected List<Bitmap> doInBackground(Void... voids) {
-        List<Bitmap> images = new ArrayList<>();
+    protected ArrayList<Bitmap> doInBackground(Void... voids) {
+        ArrayList<Bitmap> images = new ArrayList<>();
         try {
 //            MongoClientURI uri = new MongoClientURI("mongodb://byulent:mobila@ds231549.mlab.com:31549/vlgplace");
 //            MongoClient mongoClient = new MongoClient(uri);
@@ -59,7 +58,7 @@ public class GalleryLoader extends AsyncTask<Void, Void, List<Bitmap>> {
     }
 
     @Override
-    protected void onPostExecute(List<Bitmap> bitmaps) {
+    protected void onPostExecute(ArrayList<Bitmap> bitmaps) {
         mListener.onImageLoaded(bitmaps);
     }
 }
