@@ -12,13 +12,14 @@ import java.util.ArrayList;
 
 import ru.byulent.volgogradplaces.GalleryActivity;
 import ru.byulent.volgogradplaces.R;
+import ru.byulent.volgogradplaces.entities.Photo;
 import ru.byulent.volgogradplaces.loaders.GalleryLoader;
 
 
 public class GalleryAdapter extends BaseAdapter implements GalleryLoader.Listener {
 
 //    private int[] images = {R.drawable.one, R.drawable.three, R.drawable.two, R.drawable.four};
-    private ArrayList<Bitmap> images;
+    private ArrayList<Photo> images;
     private Context context;
 //    private final GalleryLoader.Listener listener = this;
 
@@ -26,7 +27,7 @@ public class GalleryAdapter extends BaseAdapter implements GalleryLoader.Listene
         this.context = context;
         GalleryLoader loader = new GalleryLoader(this);
         loader.execute();
-        setImages(new ArrayList<Bitmap>());
+        setImages(new ArrayList<Photo>());
 //        try {
 //            images = loader.execute().get();
 //        } catch (InterruptedException e) {
@@ -57,7 +58,7 @@ public class GalleryAdapter extends BaseAdapter implements GalleryLoader.Listene
     public View getView(int position, View convertView, ViewGroup parent) {
         float dp = context.getResources().getDisplayMetrics().density;
         ImageView imageView = new ImageView(context);
-        imageView.setImageBitmap(getImages().get(position));
+        imageView.setImageBitmap(getImages().get(position).getPhoto());
 //        imageView.setImageResource(images[position]);
         imageView.setBackgroundResource(R.drawable.image_border);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -67,7 +68,7 @@ public class GalleryAdapter extends BaseAdapter implements GalleryLoader.Listene
     }
 
     @Override
-    public void onImageLoaded(ArrayList<Bitmap> bitmaps) {
+    public void onImageLoaded(ArrayList<Photo> bitmaps) {
         setImages(bitmaps);
         GalleryActivity activity = (GalleryActivity) context;
         activity.showGallery();
@@ -78,11 +79,11 @@ public class GalleryAdapter extends BaseAdapter implements GalleryLoader.Listene
 
     }
 
-    public ArrayList<Bitmap> getImages() {
+    public ArrayList<Photo> getImages() {
         return images;
     }
 
-    public void setImages(ArrayList<Bitmap> images) {
+    public void setImages(ArrayList<Photo> images) {
         this.images = images;
     }
 }

@@ -16,9 +16,10 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import ru.byulent.volgogradplaces.entities.LocalDB;
+import ru.byulent.volgogradplaces.entities.Photo;
 import ru.byulent.volgogradplaces.util.Common;
 
-public class GalleryLoader extends AsyncTask<Void, Void, ArrayList<Bitmap>> {
+public class GalleryLoader extends AsyncTask<Void, Void, ArrayList<Photo>> {
     private final Listener mListener;
 
     public GalleryLoader(Listener listener) {
@@ -26,13 +27,13 @@ public class GalleryLoader extends AsyncTask<Void, Void, ArrayList<Bitmap>> {
     }
 
     public interface Listener{
-        void onImageLoaded(ArrayList<Bitmap> bitmaps);
+        void onImageLoaded(ArrayList<Photo> bitmaps);
         void onError();
     }
 
     @Override
-    protected ArrayList<Bitmap> doInBackground(Void... voids) {
-        ArrayList<Bitmap> images = new ArrayList<>();
+    protected ArrayList<Photo> doInBackground(Void... voids) {
+        ArrayList<Photo> images = new ArrayList<>();
         try {
 //            MongoClientURI uri = new MongoClientURI("mongodb://byulent:mobila@ds231549.mlab.com:31549/vlgplace");
 //            MongoClient mongoClient = new MongoClient(uri);
@@ -48,7 +49,8 @@ public class GalleryLoader extends AsyncTask<Void, Void, ArrayList<Bitmap>> {
                 String folder = "http://" + Common.HOST_NAME + aCursor.get("filePhoto", String.class).substring(1);
                 Log.d("obj", folder);
                 InputStream stream = new URL(folder).openStream();
-                images.add(BitmapFactory.decodeStream(stream));
+                Bitmap bitmap = BitmapFactory.decodeStream(stream);
+                images.add(new Photo(bitmap, 0.0, 0.0, ""));
             }
             //Toast.makeText(context, "Succesfully connected to MongoDB", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
@@ -58,7 +60,7 @@ public class GalleryLoader extends AsyncTask<Void, Void, ArrayList<Bitmap>> {
     }
 
     @Override
-    protected void onPostExecute(ArrayList<Bitmap> bitmaps) {
-        mListener.onImageLoaded(bitmaps);
+    protected void onPostExecute(ArrayList<Photo> photos) {
+        mListener.onImageLoaded(photos);
     }
 }

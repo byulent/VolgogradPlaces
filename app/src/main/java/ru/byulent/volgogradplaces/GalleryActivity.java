@@ -12,6 +12,7 @@ import com.mongodb.MongoClientURI;
 import java.util.ArrayList;
 
 import ru.byulent.volgogradplaces.adapters.GalleryAdapter;
+import ru.byulent.volgogradplaces.entities.Photo;
 import ru.byulent.volgogradplaces.loaders.GalleryLoader;
 
 public class GalleryActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class GalleryActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         adapter = new GalleryAdapter(this);
         if (savedInstanceState != null) {
-            ArrayList<Bitmap> items = savedInstanceState.getParcelableArrayList("photos");
+            ArrayList<Photo> items = savedInstanceState.getParcelableArrayList("photos");
             adapter.setImages(items);
             showGallery();
         }
