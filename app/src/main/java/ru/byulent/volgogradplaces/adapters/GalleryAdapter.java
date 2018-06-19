@@ -23,10 +23,12 @@ public class GalleryAdapter extends BaseAdapter implements GalleryLoader.Listene
     private Context context;
 //    private final GalleryLoader.Listener listener = this;
 
-    public GalleryAdapter(Context context){
+    public GalleryAdapter(Context context, boolean load){
         this.context = context;
-        GalleryLoader loader = new GalleryLoader(this);
-        loader.execute();
+        if(load) {
+            GalleryLoader loader = new GalleryLoader(this);
+            loader.execute();
+        }
         setImages(new ArrayList<Photo>());
 //        try {
 //            images = loader.execute().get();
@@ -72,6 +74,7 @@ public class GalleryAdapter extends BaseAdapter implements GalleryLoader.Listene
         setImages(bitmaps);
         GalleryActivity activity = (GalleryActivity) context;
         activity.showGallery();
+        activity.setOriginal(bitmaps);
     }
 
     @Override

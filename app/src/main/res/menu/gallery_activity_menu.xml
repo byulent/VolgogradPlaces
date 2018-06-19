@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_map"
+        android:icon="@drawable/ic_action_map"
+        android:title="@string/str_map"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_sort"
+        android:icon="@drawable/ic_action_sort"
+        android:title="@string/str_sort"
+        app:showAsAction="always">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_added_earlier"
+                    android:checked="true"
+                    android:title="@string/str_added_earlier" />
+                <item
+                    android:id="@+id/menu_added_later"
+                    android:title="@string/str_added_later" />
+                <item
+                    android:id="@+id/menu_near"
+                    android:title="@string/str_near" />
+                <item
+                    android:id="@+id/menu_far"
+                    android:title="@string/str_far" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/menu_auth"
+        android:icon="@drawable/ic_action_person_add"
+        android:title="@string/str_auth"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_add"
+        android:icon="@drawable/ic_action_add"
+        android:title="@string/str_add"
+        android:visible="false"
+        app:showAsAction="always" />
+</menu>

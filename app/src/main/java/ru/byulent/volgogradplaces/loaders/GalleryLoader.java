@@ -8,8 +8,10 @@ import android.util.Log;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Sorts;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -44,13 +46,10 @@ public class GalleryLoader extends AsyncTask<Void, Void, ArrayList<Photo>> {
 //            MongoDatabase db = mongoClient.getDatabase(uri.getDatabase());
             MongoDatabase db = LocalDB.getInstance().getDb();
             MongoCollection<Document> photos = db.getCollection("photos");
-            FindIterable<Document> cursor = photos.find();
+            FindIterable<Document> cursor = photos.find().sort(Sorts.ascending("_id"));
             for (Document aCursor : cursor) {
-                String folder = "http://" + Common.HOST_NAME + aCursor.get("filePhoto", String.class).substring(1);
-                Log.d("obj", folder);
-                InputStream stream = new URL(folder).openStream();
-                Bitmap bitmap = BitmapFactory.decodeStream(stream);
-                images.add(new Photo(bitmap, 0.0, 0.0, ""));
+
+                images.add(new Photo(aCursor));
             }
             //Toast.makeText(context, "Succesfully connected to MongoDB", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {

@@ -1,27 +1,43 @@
 package ru.byulent.volgogradplaces;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import ru.byulent.volgogradplaces.entities.LocalDB;
-import ru.byulent.volgogradplaces.entities.User;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
+import ru.byulent.volgogradplaces.entities.LocalDB;
+import ru.byulent.volgogradplaces.entities.Photo;
+import ru.byulent.volgogradplaces.entities.User;
+import ru.byulent.volgogradplaces.loaders.GalleryLoader;
+
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GalleryLoader.Listener {
 
     private static final String MAP_VIEW_BUNDLE_KEY = "hueta";
     private MapView mapView;
     private GoogleMap map;
+    private ArrayList<Photo> photos;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -59,18 +75,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
         }
+        GalleryLoader loader = new GalleryLoader(this);
+        loader.execute();
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
-        LocalDB db = LocalDB.getInstance();
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         LatLng vlg = new LatLng(48.69917,44.47333);
-        map.addMarker(new MarkerOptions().title("Volgograd").position(vlg));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(vlg, 10));
+        if (photos != null) {
+            for (Photo photo : photos) {
+                LatLng latLng = new LatLng(photo.getLatitude(), photo.getLongitude());
+                map.addMarker(new MarkerOptions().position(latLng).title(photo.getTitle()).icon(fromPhoto(photo.getPhoto())));
+            }
+        }
     }
 
     @Override
@@ -107,5 +129,32 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onResume() {
         super.onResume();
         mapView.onResume();
+    }
+
+    @Override
+    public void onImageLoaded(ArrayList<Photo> bitmaps) {
+        photos = bitmaps;
+        mapView.getMapAsync(this);
+    }
+
+    @Override
+    public void onError() {
+
+    }
+
+    private BitmapDescriptor fromPhoto(Bitmap photo){
+        View view = ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.map_marker, null);
+        ImageView imageView = view.findViewById(R.id.imageView3);
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), photo);
+        roundedBitmapDrawable.setCircular(true);
+        imageView.setImageDrawable(roundedBitmapDrawable);
+        DisplayMetrics d = getResources().getDisplayMetrics();
+        view.measure(d.widthPixels, d.heightPixels);
+        view.layout(0, 0, d.widthPixels, d.heightPixels);
+        view.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(view.getMeasuredWidth(), view.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 }

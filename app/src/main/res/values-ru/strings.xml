@@ -22,4 +22,14 @@
     <string name="required_field">Field is required</string>
     <string name="min_length">Minimum length is 6 characters</string>
     <string name="invalid_email">Email is invalid</string>
+    <string name="str_sort">Sort</string>
+    <string name="str_far">Far</string>
+    <string name="str_added_earlier">Added earlier</string>
+    <string name="str_added_later">Added later</string>
+    <string name="str_map">Map</string>
+    <string name="str_add">Add</string>
+    <string name="str_photo">Photo</string>
+    <string name="str_description">Description</string>
+    <string name="str_keywords">Keywords</string>
+    <string name="str_sight_page">Sight page</string>
 </resources>

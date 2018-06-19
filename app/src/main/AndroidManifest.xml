@@ -28,7 +28,9 @@
             android:name=".AuthActivity"
             android:label="@string/title_activity_auth"
             android:theme="@style/AppTheme" />
-        <activity android:name=".RegActivity"></activity>
+        <activity android:name=".RegActivity" />
+        <activity android:name=".AddPhotoActivity" />
+        <activity android:name=".ViewPhotoActivity"></activity>
     </application>
 
 </manifest>
